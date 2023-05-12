@@ -83,7 +83,7 @@ jobs:
       #nevim jestli tohle bude fungovat xd
       - name: get git tag
         id: gittag
-        run: tag=${GITHUB_REF#refs/*/}
+        run: echo "tag=${GITHUB_REF#refs/*/}"
           
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.10.0
