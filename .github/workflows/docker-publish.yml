@@ -79,11 +79,16 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+      
+      #nevim jestli tohle bude fungovat xd
+      - name: get git tag
+        id: gittag
+        run: tag=${GITHUB_REF#refs/*/}
           
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.10.0
         with:
-          image-ref: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }}'
+          image-ref: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.gittag.outputs.tag }}'
           format: 'template'
           template: '@/contrib/sarif.tpl'
           output: 'trivy-results.sarif'
